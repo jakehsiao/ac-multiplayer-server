@@ -1,12 +1,22 @@
+// const express = require('express');
+// const cors = require('cors');
+// const app = express();
+// app.use(cors());
+// const server = require("http").createServer(app);
 const server = require("http").createServer();
-// const io = require("socket.io")(server, {
-//   cors: {
-//     origin: "*",
-//     // origin: "http://localhost:3000",
-//     // methods: ["GET", "POST"],
-//   },
-// });
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+  cors: {
+    // origin: "*",
+    // origin: "http://localhost:3000|https://dadiaogames.gitee.io",
+    // origin: "http://localhost:3000",
+    origin: "http://dadiaogames.gitee.io",
+    methods: ["GET", "POST"],
+    transports: ['websocket', 'polling'],
+    credentials: true, // Why have this?
+  },
+  allowEIO3: true,  // Have this is important
+});
+// const io = require("socket.io")(server);
 
 const PORT = 3050;
 
@@ -22,6 +32,12 @@ io.on("connection", (socket) => {
   socket.on("diff", (data) => {
     socket.to(room_id).emit("diff", data);
     console.log(`Send diff from ${socket.id} at ${room_id} which is ${data}`);
+  })
+
+  // On turn ends
+  socket.on("turn end", (data) => {
+    socket.to(room_id).emit("turn end", data);
+    console.log(`Send turn end from ${socket.id} at ${room_id}`);
   })
 
   // Leave the room if disconnected
