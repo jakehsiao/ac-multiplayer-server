@@ -13,7 +13,7 @@ const io = require("socket.io")(server, {
     // origin: "*",
     // origin: "http://localhost:3000|https://dadiaogames.gitee.io",
     // origin: "http://localhost:3000",
-    origin: "http://dadiaogames.gitee.io",
+    origin: "https://dadiaogames.gitee.io",
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling'],
     credentials: true, // Why have this?
