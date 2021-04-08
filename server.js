@@ -29,7 +29,8 @@ io.on("connection", (socket) => {
   // EH: one room can only have two guys
   // EH: add database stuffs
   const { room_id } = socket.handshake.query;
-  console.log(`Socket ${socket.id} joined ${room_id}`);
+  let date = new Date();
+  console.log(`Socket ${socket.id} joined ${room_id} ${date.getMonth()}.${date.getDay()} ${date.getHours()}:${date.getMinutes()}`);
   socket.join(room_id);
 
   // On new diff, because it is socket.to, so only send to another guy
